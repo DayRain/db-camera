@@ -1,0 +1,28 @@
+{
+    "version": 1.0,
+    "username": "root",
+    "password": "root",
+    "cursor": 4,
+    "items": [
+        {
+            "id": 1,
+            "db_name": "zikoo_wms",
+            "show_name": "wms管理系统",
+            "file_name": "abc.sql",
+            "create_time": "2021-12-12 00:00:00",
+            "remark": "问题2"
+        },
+        {
+            "id": 4,
+            "db_name": "zk_wms",
+            "show_name": "智库001",
+            "file_name": "00004zk_wms智库001.sql",
+            "create_time": {
+                "year": 2023,
+                "month": 2,
+                "day": 20
+            },
+            "remark": "问题123的准备数据"
+        }
+    ]
+}
