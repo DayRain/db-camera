@@ -115,6 +115,8 @@ class DbUtils:
     def save_sql(self, sql, name):
         if os.path.exists(name):
             return None
+        if not os.path.exists('sql'):
+            os.makedirs('sql')
         with open(name, 'w', encoding='utf-8') as fp:
             fp.write(sql)
 

@@ -1,6 +1,7 @@
+import time
 from threading import Thread
 
-from PySide6.QtCore import Qt, QObject, Signal
+from PySide6.QtCore import Qt, QObject, Signal, QTimer
 from PySide6.QtWidgets import QTableWidgetItem, QHeaderView, QFileDialog
 
 from connect import db_utils
@@ -29,7 +30,6 @@ class DbListThread(Thread, QObject):
         dbs = dbContainer.db_utils.get_dbs()
         self.update_single.emit(dbs)
 
-
 class DataBind:
     def __init__(self, window):
         self.window = window
@@ -51,8 +51,22 @@ class DataBind:
         db_name = self.save_dialog.dbEdit.text()
         show_name = self.save_dialog.nameEdit.text()
         remark = self.save_dialog.remarkEdit.text()
+        self.start_task('保存中...')
         dbContainer.add_item(db_name, show_name, remark)
+        self.finish_task()
         self.refreshTable(items=dbContainer.db_config.items)
+
+    def task_progress(self, value):
+        self.window.progressBar.setValue(value)
+        if value == 100:
+            self.finish_task()
+
+    def start_task(self, text):
+        self.window.taskLabel.setText(text)
+        self.window.taskLabel.repaint()
+
+    def finish_task(self):
+        self.window.taskLabel.setText('   ')
 
     def dataBind(self):
         self.refresh_dbs()
@@ -61,17 +75,13 @@ class DataBind:
         self.window.searchEdit.textChanged.connect(self.search)
         self.window.settingsBtn.clicked.connect(self.click_settings_button)
         self.window.importBtn.clicked.connect(self.openFileDialog)
+        self.window.taskLabel.setText('   ')
 
     def refresh_dbs(self):
-        # connected = dbContainer.test_connection()
-        # dbs = []
-        # if connected:
-        #     dbs = dbContainer.db_utils.get_dbs()
         self.window.dbComboBox.clear()
         db_thread = DbListThread()
         db_thread.update_single.connect(self.window.dbComboBox.addItems)
         db_thread.start()
-        # self.window.dbComboBox.addItems(dbs)
 
     def search(self, event):
         keyword = self.window.searchEdit.text()
@@ -112,12 +122,14 @@ class DataBind:
 
     def openFileDialog(self):
         filenames = QFileDialog.getOpenFileNames(self.window, 'Open File')
+        self.start_task('导入中...')
         for filename in filenames[0]:
             with open(filename, encoding='utf-8', )as fp:
                 sql = fp.read()
                 if sql is not None and not sql.isspace():
                     dbContainer.import_item(sql)
                     self.refreshTable(dbContainer.db_config.items)
+        self.finish_task()
 
     def test_connection(self):
         ip = self.settings_dialog.iPEdit.text()

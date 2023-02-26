@@ -1,4 +1,5 @@
 import os
+import time
 
 from PySide6 import QtGui
 from PySide6.QtWidgets import QPushButton, QDialog, QDialogButtonBox, QVBoxLayout, QLabel
@@ -38,7 +39,6 @@ class TableButton(QPushButton):
         item = self.dbContainer.read_item(self.item_id)
         absolute_path = os.path.join(os.getcwd(), 'sql', item.file_name)
         os.system(r"explorer /select, " + absolute_path)
-
 
 
 class DeleteDialog(QDialog):
