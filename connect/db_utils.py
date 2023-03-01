@@ -54,6 +54,8 @@ class DbUtils:
 
                 if type(item) is (int or float):
                     sql = sql + ' ' + str(item) + ','
+                elif item is None:
+                    sql = sql + ' ' + ' null ' + ','
                 else:
                     sql = sql + " '" + str(item) + "',"
             sql = sql[:-1] + ' )'

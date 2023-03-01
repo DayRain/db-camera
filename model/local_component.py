@@ -4,6 +4,8 @@ import time
 from PySide6 import QtGui
 from PySide6.QtWidgets import QPushButton, QDialog, QDialogButtonBox, QVBoxLayout, QLabel
 
+from core.log_utils import get_log
+
 DELETE_TEXT = '删除'
 EXPORT_TEXT = '导出'
 ACTION_TEXT = '执行'
