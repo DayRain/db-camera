@@ -33,7 +33,7 @@ class SqlItem:
 
 
 class DbConfig:
-    def __init__(self, version, ip, username, password, cursor, charset, items):
+    def __init__(self, version, ip, username, password, cursor, charset, items, recent_dbs: list):
         self.version = version
         self.username = username
         self.ip = ip
@@ -41,8 +41,21 @@ class DbConfig:
         self.cursor = cursor
         self.charset = charset
         self.items = []
+        self.recent_dbs = recent_dbs
         for item in items:
             self.items.append(SqlItem(**item))
+
+    def add_recent_dbs(self, db):
+        self.recent_dbs.insert(0, db)
+        if len(self.recent_dbs) > 10:
+            self.recent_dbs.pop()
+
+    def get_appear_count(self, db):
+        count = 0
+        for item in self.recent_dbs:
+            if item == db:
+                count = count + 1
+        return count
 
     def __repr__(self) -> str:
         return json.dumps(self, ensure_ascii=False, default=lambda o: o.__dict__, indent=4)
@@ -76,6 +89,7 @@ class DbContainer:
         # add item
         item = SqlItem(self.db_config.cursor, db_name, show_name, file_name, now_time, remark)
         self.db_config.items.append(item)
+        self.db_config.add_recent_dbs(db_name)
         # save sql
         self.save_file(sql, item)
         # save config
@@ -150,3 +164,8 @@ class DbContainer:
 
     def test_connection(self):
         return self.db_utils.connection_test()
+
+    def get_dbs(self):
+        dbs = self.db_utils.get_dbs()
+        dbs.sort(key=self.db_config.get_appear_count, reverse=True)
+        return dbs

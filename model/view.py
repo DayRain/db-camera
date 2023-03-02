@@ -28,7 +28,7 @@ class DbListThread(Thread, QObject):
         QObject.__init__(self)
 
     def run(self):
-        dbs = dbContainer.db_utils.get_dbs()
+        dbs = dbContainer.get_dbs()
         self.update_single.emit(dbs)
 
 class DataBind:
@@ -56,6 +56,7 @@ class DataBind:
         dbContainer.add_item(db_name, show_name, remark)
         self.finish_task()
         self.refreshTable(items=dbContainer.db_config.items)
+        self.refresh_dbs()
 
     def task_progress(self, value):
         self.window.progressBar.setValue(value)
