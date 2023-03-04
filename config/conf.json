@@ -1,9 +1,9 @@
 {
     "version": 1.0,
     "username": "root",
-    "ip": "192.168.10.66",
+    "ip": "127.0.0.1",
     "password": "root",
-    "cursor": 68,
+    "cursor": 73,
     "charset": "utf8mb4",
     "items": [
         {
@@ -16,15 +16,15 @@
         }
     ],
     "recent_dbs": [
+        "demo02",
+        "test",
+        "tjzh_wms",
+        "tjzh_wms",
+        "zk_wms",
         "test",
         "zk_wms",
         "zk_wms",
         "test",
-        "zk_wms",
-        "zk_wms",
-        "zk_wms",
-        "test",
-        "zikoo_wms",
-        "zikoo_wms"
+        "zk_wms"
     ]
 }

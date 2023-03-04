@@ -1,4 +1,5 @@
 import os
+import time
 
 import pymysql
 
@@ -73,17 +74,18 @@ class DbUtils:
         executor.execute('use ' + db + ';')
         res_str = ''
         for table in tables:
-            executor.execute('show create table ' + table[0] + ';')
+            table_name = table[0]
+            executor.execute('show create table ' + table_name + ';')
             for state in executor.fetchall():
                 create = state[1] + ';' + '\n'
 
                 kind = "TABLE"
                 if table[1] == 'VIEW':
                     kind = 'VIEW'
-                drop = 'DROP ' + kind + ' IF EXISTS `' + table[0] + '`;\n'
+                drop = 'DROP ' + kind + ' IF EXISTS `' + table_name + '`;\n'
 
-                executor.execute('select * from ' + table[0])
-                data_sql = self.get_data_sql(table[0], executor.fetchall())
+                executor.execute('select * from ' + table_name)
+                data_sql = self.get_data_sql(table_name, executor.fetchall())
 
                 res_str = res_str + drop + create
                 if data_sql is not None:

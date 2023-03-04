@@ -30,7 +30,7 @@ class SearchComboBox(QComboBox):
         if text:
             index = self.findText(text)
             self.setCurrentIndex(index)
-            self.activated[str].emit(self.itemText(index))
+            self.activated[int].emit(self.itemText(index))
 
     # on model change, update the models of the filter and completer as well
     def setModel(self, model):
