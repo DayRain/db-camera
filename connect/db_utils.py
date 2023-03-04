@@ -152,11 +152,3 @@ def connection_test(ip, user, password):
     except Exception as err:
         print(err)
         return False
-
-# if __name__ == '__main__':
-#     dbs = get_dbs()
-#     tb_str = print_tables(dbs[4])
-#     save_sql(tb_str, 'abc.sql')
-#     tb_str = read_sql('abc.sql')
-#
-#     execute(dbs[4], tb_str)

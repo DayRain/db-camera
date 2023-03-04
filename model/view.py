@@ -4,6 +4,7 @@ from threading import Thread
 
 from PySide6.QtCore import Qt, QObject, Signal, QTimer
 from PySide6.QtWidgets import QTableWidgetItem, QHeaderView, QFileDialog
+from qt_material import apply_stylesheet
 
 from connect import db_utils
 from core.db_manager import DbContainer
@@ -97,7 +98,6 @@ class DataBind:
             self.refreshTable(items)
 
     def click_settings_button(self):
-        print('clicked')
         loader = QUiLoader()
         self.settings_dialog = loader.load('./ui/settings.ui')
         self.settings_dialog.setWindowIcon(get_icon())
@@ -116,11 +116,6 @@ class DataBind:
             dbContainer.save_config()
             dbContainer.refresh()
             self.refresh_dbs()
-
-            print("S")
-        else:
-            print("E")
-        pass
 
     def openFileDialog(self):
         filenames = QFileDialog.getOpenFileNames(self.window, 'Open File')
@@ -194,5 +189,6 @@ def show_window():
     window = MainWindow()
     window.setWindowIcon(get_icon())
     bind = DataBind(window)
+    apply_stylesheet(app, theme='dark_cyan.xml', css_file="./ui/custom.css")
     window.show()
     app.exec()

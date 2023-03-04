@@ -20,6 +20,9 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QHeaderView
     QPushButton, QSizePolicy, QSpacerItem, QStatusBar,
     QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget)
 
+from model.search_combox import SearchComboBox
+
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
@@ -36,7 +39,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.dbComboBox = QComboBox(self.layoutWidget)
+        self.dbComboBox = SearchComboBox(self.layoutWidget)
         self.dbComboBox.setObjectName(u"dbComboBox")
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(3)

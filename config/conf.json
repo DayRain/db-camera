@@ -3,10 +3,23 @@
     "username": "root",
     "ip": "192.168.10.66",
     "password": "root",
-    "cursor": 64,
+    "cursor": 68,
     "charset": "utf8mb4",
-    "items": [],
+    "items": [
+        {
+            "id": 68,
+            "db_name": "test",
+            "show_name": "用例XXXX准备数据",
+            "file_name": "000068test_用例XXXX准备数据.sql",
+            "create_time": "2023-03-04 09:25:44",
+            "remark": "可以简单描述下用例的目的"
+        }
+    ],
     "recent_dbs": [
+        "test",
+        "zk_wms",
+        "zk_wms",
+        "test",
         "zk_wms",
         "zk_wms",
         "zk_wms",
